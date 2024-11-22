@@ -8,7 +8,7 @@ import os
 os.makedirs("models", exist_ok=True)
 
 # Load dataset
-data = np.loadtxt("data/gesture_data.csv", delimiter=",")
+data = np.loadtxt("data/cleaned_gesture_data.csv", delimiter=",")
 X = data[:, :-1]  # Landmark coordinates
 y = data[:, -1]   # Gesture labels
 
