@@ -35,6 +35,15 @@ while True:
         gesture_label = 4  # Label for "Fist"
     elif cv2.waitKey(1) & 0xFF == ord('5'):
         gesture_label = 5  # Label for "Stop Sign"
+    elif cv2.waitKey(1) & 0xFF == ord('a'):
+        gesture_label = 6  # Label for  'A'
+    elif cv2.waitKey(1) & 0xFF == ord('b'):
+        gesture_label = 7  # Label for  'B'
+    elif cv2.waitKey(1) & 0xFF == ord('c'):
+        gesture_label = 8  # Label for  'C'
+    elif cv2.waitKey(1) & 0xFF == ord('d'):
+        gesture_label = 9 # Label for "D"
+
 
     if results.multi_hand_landmarks and gesture_label:
         for hand_landmarks in results.multi_hand_landmarks:
