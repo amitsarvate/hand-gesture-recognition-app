@@ -43,6 +43,50 @@ while True:
         gesture_label = 8  # Label for  'C'
     elif cv2.waitKey(1) & 0xFF == ord('d'):
         gesture_label = 9 # Label for "D"
+    elif cv2.waitKey(1) & 0xFF == ord('e'):
+        gesture_label = 10 # Label for "e"
+    elif cv2.waitKey(1) & 0xFF == ord('f'):
+        gesture_label = 11  # Label for 'f'
+    elif cv2.waitKey(1) & 0xFF == ord('g'):
+        gesture_label = 12  # Label for 'g'
+    elif cv2.waitKey(1) & 0xFF == ord('h'):
+        gesture_label = 13  # Label for 'h'
+    elif cv2.waitKey(1) & 0xFF == ord('i'):
+        gesture_label = 14  # Label for 'i'
+    elif cv2.waitKey(1) & 0xFF == ord('j'):
+        gesture_label = 15  # Label for 'j'
+    elif cv2.waitKey(1) & 0xFF == ord('k'):
+        gesture_label = 16  # Label for 'k'
+    elif cv2.waitKey(1) & 0xFF == ord('l'):
+        gesture_label = 17  # Label for 'l'
+    elif cv2.waitKey(1) & 0xFF == ord('m'):
+        gesture_label = 18  # Label for 'm'
+    elif cv2.waitKey(1) & 0xFF == ord('n'):
+        gesture_label = 19  # Label for 'n'
+    elif cv2.waitKey(1) & 0xFF == ord('o'):
+        gesture_label = 20  # Label for 'o'
+    elif cv2.waitKey(1) & 0xFF == ord('p'):
+        gesture_label = 21  # Label for 'p'
+    elif cv2.waitKey(1) & 0xFF == ord('q'):
+        gesture_label = 22  # Label for 'q'
+    elif cv2.waitKey(1) & 0xFF == ord('r'):
+        gesture_label = 23  # Label for 'r'
+    elif cv2.waitKey(1) & 0xFF == ord('s'):
+        gesture_label = 24  # Label for 's'
+    elif cv2.waitKey(1) & 0xFF == ord('t'):
+        gesture_label = 25  # Label for 't'
+    elif cv2.waitKey(1) & 0xFF == ord('u'):
+        gesture_label = 26  # Label for 'u'
+    elif cv2.waitKey(1) & 0xFF == ord('v'):
+        gesture_label = 27  # Label for 'v'
+    elif cv2.waitKey(1) & 0xFF == ord('w'):
+        gesture_label = 28  # Label for 'w'
+    elif cv2.waitKey(1) & 0xFF == ord('x'):
+        gesture_label = 29  # Label for 'x'
+    elif cv2.waitKey(1) & 0xFF == ord('y'):
+        gesture_label = 30  # Label for 'y'
+    elif cv2.waitKey(1) & 0xFF == ord('z'):
+        gesture_label = 31  # Label for 'z'
 
 
     if results.multi_hand_landmarks and gesture_label:
