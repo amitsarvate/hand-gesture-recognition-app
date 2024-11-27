@@ -15,10 +15,11 @@ def classify_gesture(hand_landmarks):
     landmarks = landmarks / landmarks.max()
     landmarks = landmarks.reshape(1, -1)  # Reshape for prediction
     prediction = model.predict(landmarks)
-    gesture_label = np.argmax(prediction)
+    gesture_label = np.argmax(prediction)  # Get the class index with the highest probability
     return gesture_label
 
-gesture_names = {0: "Thumbs Up", 1: "OK Sign", 2: "Victory", 3: "Fist", 4: "Stop Sign"}
+# Mapping the labels (0-25) to the letters A-Z
+gesture_names = {i: chr(65 + i) for i in range(26)}  # 0 -> A, 1 -> B, ..., 25 -> Z
 
 # Initialize MediaPipe Hands
 hands = mp_hands.Hands(static_image_mode=False, max_num_hands=1, min_detection_confidence=0.5, min_tracking_confidence=0.5)

@@ -12,8 +12,15 @@ data = np.loadtxt("data/gesture_data.csv", delimiter=",")
 X = data[:, :-1]  # Landmark coordinates
 y = data[:, -1]   # Gesture labels
 
-# Adjust labels to start from 0
-y = y - 1  # Subtract 1 from all label values
+# Check if there are any 0 labels, and adjust them accordingly
+if np.any(y == 0):
+    print("Warning: Some labels are zero. They will be adjusted.")
+
+# Ensure the labels start from 0 (if needed)
+# If labels start from 1, subtract 1 to make them start from 0
+# Avoid adjusting if the labels already start from 0
+if np.min(y) > 0:
+    y = y - 1  # Subtract 1 from all label values to make them start from 0
 
 # Normalize data
 X -= X.min(axis=0)
