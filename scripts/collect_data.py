@@ -1,70 +1,62 @@
+# --------------------------------------------------------------------------------------------
+#
+# Title: Collect Data (Project Part 1)
+# Course: CSCI 3240 (Computational Photography)
+# Authors: Amit Sarvate and Nirujan Velvarathan
+# Date: December 8th 2024
+#
+# Description: The purpose of this script is to allow us to collect the training data that we 
+# will feed to our classification model in order to enable real-time hand gesture recognition 
+#
+# --------------------------------------------------------------------------------------------
+
 import cv2
 import mediapipe as mp
 import numpy as np
 import csv
 
+#  Initialize MediaPipe Hands library module and drawing utilities
 mp_hands = mp.solutions.hands
 mp_drawing = mp.solutions.drawing_utils
 
-# Apply Gaussian Blur to the frame
-def apply_gaussian_blur(frame):
-    return cv2.GaussianBlur(frame, (5, 5), 0)
-
-# Convert to grayscale
-def convert_to_grayscale(frame):
-    return cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
-# Histogram Equalization
-def histogram_equalization(frame):
-    return cv2.equalizeHist(frame)
-
-# Canny Edge Detection
-def canny_edge_detection(frame):
-    return cv2.Canny(frame, 100, 200)
-
-# Apply sharpening filter
+# Applying a sharpening filter to the frame 
 def sharpen_image(frame):
-    kernel = np.array([[0, -1, 0], [-1, 5,-1], [0, -1, 0]])  # Sharpening kernel
-    return cv2.filter2D(frame, -1, kernel)
+    kernel = np.array([[0, -1, 0], [-1, 5,-1], [0, -1, 0]]) 
+    return cv2.filter2D(frame, -1, kernel) # Convolving with our signal 
 
-# Mapping keys (1-5) to gesture labels
+# Logging hand landmark coordinates along with gesture label assigned into a CSV 
 def log_landmarks(landmarks, label):
     with open("data/gesture_data.csv", "a", newline="") as file:
         writer = csv.writer(file)
         writer.writerow(np.hstack((landmarks.flatten(), label)))
 
-# Initialize MediaPipe Hands
+# Initializing MediaPipe hands 
 hands = mp_hands.Hands(static_image_mode=False, max_num_hands=1, min_detection_confidence=0.5, min_tracking_confidence=0.5)
+
+# Capturing video from laptop's webcam 
 cap = cv2.VideoCapture(0)
 
 while True:
+
+    # Reading frame from webcam 
     ret, frame = cap.read()
     if not ret:
         break
 
+    # Flippinh frame using cv2.flip to create mirroe view 
     frame = cv2.flip(frame, 1)
 
-    # Apply computational photography techniques
-    # Uncomment one of the lines below to apply specific techniques
-
-    # Optionally apply Gaussian Blur
-    # frame = apply_gaussian_blur(frame)
-
-    # Convert to grayscale
-    # frame = convert_to_grayscale(frame)
-
-    # Apply Histogram Equalization
-    # frame = histogram_equalization(frame)
-
-    # Apply Canny Edge Detection (for edge focus)
-    # frame = canny_edge_detection(frame)
-
-    # Apply Sharpening
+    # Apply sharpening kernel to signal (frame)
     frame = sharpen_image(frame)
 
+    # Converting frame from BGR to RGB colour space 
     rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+    # Processing frame to detect hand and landmarks on hand from frame 
     results = hands.process(rgb_frame)
 
+    # Depending on the gesture currently being recorded the user will need to press a specific key ... 
+    # ... This will give each instanance of landmarks an associated class label (used for our classification model)
     gesture_label = None
     if cv2.waitKey(1) & 0xFF == ord('1'):
         gesture_label = 1  # Label for "Thumbs Up"
@@ -77,15 +69,26 @@ while True:
     elif cv2.waitKey(1) & 0xFF == ord('5'):
         gesture_label = 5  # Label for "Stop Sign"
 
+    # If hand landmarks are detected and a gesture label has been assigned
     if results.multi_hand_landmarks and gesture_label:
         for hand_landmarks in results.multi_hand_landmarks:
+
+            # Extract x,y,z coordinates from each landmark 
             landmarks = np.array([(lm.x, lm.y, lm.z) for lm in hand_landmarks.landmark])
+
+            # Use function defined above in order to log the landmarks and gesture label into the CSV file 
             log_landmarks(landmarks, gesture_label)
+
+            # Draw landmarks and connection onto the frame (helps with visualization)
             mp_drawing.draw_landmarks(frame, hand_landmarks, mp_hands.HAND_CONNECTIONS)
 
+    # Display the frame
     cv2.imshow("Data Collection", frame)
-    if cv2.waitKey(1) & 0xFF == 27:  # ESC key to exit
+
+    # Exit the loop if the ESC key is pressed 
+    if cv2.waitKey(1) & 0xFF == 27:  
         break
 
+# Replease the webcam and close OpenCV windows 
 cap.release()
 cv2.destroyAllWindows()

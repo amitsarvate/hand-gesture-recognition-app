@@ -1,3 +1,15 @@
+# --------------------------------------------------------------------------------------------
+#
+# Title: Gesture Recongition based Image Manipulation (Project Part 3)
+# Course: CSCI 3240 (Computational Photography)
+# Authors: Amit Sarvate and Nirujan Velvarathan
+# Date: December 8th 2024
+#
+# Description: The purpose of this script is detect hand gestures in real time and based on 
+# those hand gesture, manipulate an image in real time 
+#
+# --------------------------------------------------------------------------------------------
+
 import cv2
 import mediapipe as mp
 import numpy as np
