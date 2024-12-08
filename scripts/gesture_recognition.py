@@ -122,7 +122,7 @@ while True:
             # Draw landmarks on the video feed
             mp_drawing.draw_landmarks(rgb_frame, hand_landmarks, mp_hands.HAND_CONNECTIONS)
 
-    # Updating video feed and resizing 
+    # Updating video feed and resizing
     frame_resized = cv2.resize(rgb_frame, (DISPLAY_WIDTH, DISPLAY_HEIGHT))
     frame_bgr = cv2.cvtColor(frame_resized, cv2.COLOR_RGB2BGR) 
     imgbytes = cv2.imencode(".png", frame_bgr)[1].tobytes()
